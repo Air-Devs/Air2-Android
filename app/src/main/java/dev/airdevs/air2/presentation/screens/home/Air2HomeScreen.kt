@@ -31,6 +31,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -96,11 +97,19 @@ fun Air2HomeScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
+            // 横屏（游戏机式布局）：卡片靠右
+            // 竖屏（手机）：卡片占满宽度，居中
+            val isLandscape = LocalConfiguration.current.screenWidthDp >
+                LocalConfiguration.current.screenHeightDp
+
             Surface(
                 modifier = Modifier
-                    .align(Alignment.CenterEnd)
+                    .align(if (isLandscape) Alignment.CenterEnd else Alignment.Center)
                     .padding(A2Spacing.XL)
-                    .width(320.dp),
+                    .then(
+                        if (isLandscape) Modifier.width(360.dp)
+                        else Modifier.fillMaxWidth()
+                    ),
                 color = colors.surfaceContainerHigh,
                 shape = RoundedCornerShape(A2Radius.XL),
             ) {
