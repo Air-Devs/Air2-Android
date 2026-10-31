@@ -5,6 +5,12 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
+}
+
 android {
     namespace = "dev.airdevs.air2"
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -42,9 +48,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+    // kotlinOptions 已弃用，改用 compilerOptions（见 build.gradle.kts 顶部)
 
     buildFeatures {
         compose = true
